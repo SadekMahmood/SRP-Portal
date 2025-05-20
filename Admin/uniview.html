@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>View University Details</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    padding: 2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #111827;
+  }
+  .field-row {
+    margin-bottom: 1.3rem;
+  }
+  .label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #374151;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .value {
+    font-size: 1rem;
+    color: #1f2937;
+    padding: 0.6rem 1rem;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  /* Special styling for logo image */
+  .logo-container {
+    border: 1px solid #d1d5db;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    max-width: 220px;
+    max-height: 120px;
+    background: #f9fafb;
+  }
+  .logo-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.3rem;
+    object-fit: contain;
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>University Details</h1>
+    <div class="field-row">
+      <label class="label" for="universityName">University Name</label>
+      <div class="value" id="universityName">Global Tech University</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="location">Country &amp; City</label>
+      <div class="value" id="location">United States, New York</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="accreditation">Accreditation Info</label>
+      <div class="value" id="accreditation">Regionally accredited by the Higher Learning Commission (HLC).</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="logo">University Logo</label>
+      <div class="logo-container">
+        <img src="https://via.placeholder.com/200x100.png?text=University+Logo" alt="University Logo" />
+      </div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="partnerSince">Partner Since</label>
+      <div class="value" id="partnerSince">2010-05-15</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="contactInfo">Contact Info</label>
+      <div class="value" id="contactInfo">info@globaltech.edu | +1 (555) 123-4567</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="websiteUrl">Website URL</label>
+      <div class="value" id="websiteUrl">
+        <a href="https://www.globaltech.edu" target="_blank" rel="noopener noreferrer">https://www.globaltech.edu</a>
+      </div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="status">Status</label>
+      <div class="value" id="status">Active</div>
+    </div>
+    <div class="field-row">
+      <label class="label" for="tags">Tags/Filters</label>
+      <div class="value" id="tags">technology, engineering, computer science</div>
+    </div>
+  </div>
+</body>
+</html>
+

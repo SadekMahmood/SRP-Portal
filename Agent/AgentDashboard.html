@@ -1,0 +1,483 @@
+<html>
+  <head>
+    <title>Agent Dashboard | EduConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .active-menu {
+        color: #2563eb !important;
+      }
+      .active-bg {
+        background-color: #e0e7ff !important;
+      }
+      .transition-transform {
+        transition: transform 0.25s;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-[#18181b] min-h-screen flex flex-col">
+    <!-- Topbar -->
+    <header class="w-full border-b border-gray-200 bg-white flex items-center h-16 z-30 relative">
+      <nav class="flex flex-1 items-center px-4 md:px-12 w-full relative">
+        <span class="font-bold text-lg pr-5 md:pr-8 select-none whitespace-nowrap">EduConnect</span>
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex text-base flex-1 gap-2 lg:gap-6 items-center ml-1">
+          <li>
+            <a href="AgentDashboard.html" class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link active-menu active-bg" id="dashboard-link">
+              <i class="fas fa-th-large text-gray-500"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="Student.html" class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link" id="students-link">
+              <i class="fas fa-user-graduate text-gray-500"></i>
+              <span>Students</span>
+            </a>
+          </li>
+          <li>
+            <a href="University.html" class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link" id="universities-link">
+              <i class="fas fa-university text-gray-500"></i>
+              <span>Universities</span>
+            </a>
+          </li>
+          <li>
+            <a href="ApplicationDash.html" class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link hover:bg-blue-50" id="applications-link">
+              <i class="fas fa-folder-open text-gray-500"></i>
+              <span>Applications</span>
+            </a>
+          </li>
+        </ul>
+        <div class="flex-1 md:hidden"></div>
+        <!-- Right quick buttons -->
+        <div class="flex items-center gap-2 ml-auto">
+          <a href="help.html" class="hidden md:inline-block px-3 py-1.5 rounded-lg text-blue-600 bg-blue-100 font-medium hover:bg-blue-200 text-sm">Help</a>
+          <a href="NewApplication.html" class="px-3 md:px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow transition">New Application</a>
+          <!-- Profile Menu -->
+<div class="relative ml-2">
+  <button id="profileButton" class="h-9 w-9 rounded-full overflow-hidden border border-gray-300 flex-shrink-0 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&w=100&h=100&fit=facearea&facepad=2.0" alt="Profile" class="w-full h-full object-cover"/>
+  </button>
+  <!-- Profile Dropdown Menu -->
+  <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-100 z-50">
+    <a href="profile.html" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50">
+      <i class="fas fa-user w-5"></i>
+      <span>Profile</span>
+    </a>
+   
+    <div class="border-t border-gray-100 my-1"></div>
+    <a href="#" class="flex items-center px-4 py-2 text-red-600 hover:bg-gray-50" onclick="handleLogout()">
+      <i class="fas fa-sign-out-alt w-5"></i>
+      <span>Logout</span>
+    </a>
+  </div>
+</div>
+          <!-- Hamburger mobile menu -->
+          <button id="mobileMenuButton" class="md:hidden ml-1 h-9 w-9 flex items-center justify-center rounded-lg active:bg-gray-100" aria-label="Open menu">
+            <i class="fas fa-bars text-xl text-gray-600"></i>
+          </button>
+        </div>
+        <!-- Mobile menu overlay -->
+        <div id="mobileMenuOverlay" class="fixed inset-0 z-50 bg-black/30 hidden"></div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="fixed top-0 right-0 w-64 max-w-full h-full bg-white shadow-lg z-50 flex flex-col p-5 gap-2 transform translate-x-full transition-transform duration-300 md:hidden" style="transition:transform .3s;">
+          <div class="flex w-full justify-between items-center mb-5">
+            <span class="font-bold text-lg">Menu</span>
+            <button id="closeMobileMenu" class="text-gray-500 hover:text-blue-700 h-8 w-8 flex items-center justify-center rounded-md">
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+          <a href="AgentDashboard.html" class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link active-menu active-bg" id="dashboard-link-m">
+            <i class="fas fa-th-large text-gray-500"></i>
+            Dashboard
+          </a>
+          <a href="Student.html" class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link" id="students-link-m">
+            <i class="fas fa-user-graduate text-gray-500"></i>
+            Students
+          </a>
+          <a href="University.html" class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link" id="universities-link-m">
+            <i class="fas fa-university text-gray-500"></i>
+            Universities
+          </a>
+          <a href="ApplicationDash.html" class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link hover:bg-blue-50" id="applications-link-m">
+            <i class="fas fa-folder-open text-gray-500"></i>
+            Applications
+          </a>
+          <div class="border-t border-gray-200 my-4"></div>
+          <a href="help.html" class="px-3 py-2 rounded-lg text-blue-600 bg-blue-100 font-medium hover:bg-blue-200 text-sm">Help</a>
+          <a href="NewApplication.html" class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow transition">New Application</a>
+        </div>
+      </nav>
+    </header>
+    <main class="flex-1 px-2 sm:px-4 md:px-10 lg:px-12 pb-8 pt-6 bg-white w-full mx-auto max-w-[1600px]">
+      <!-- Breadcrumbs -->
+      <nav class="flex text-sm text-gray-400 mb-6 pt-2" aria-label="Breadcrumb">
+        <ol class="flex space-x-2 items-center overflow-x-auto">
+          <li><a href="#" class="hover:underline text-gray-500">Dashboard</a></li>
+          <li><i class="fas fa-chevron-right text-xs mx-1"></i></li>
+          <li class="text-gray-700 font-semibold">Agent Dashboard</li>
+        </ol>
+      </nav>
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
+        <h1 class="text-2xl font-bold">Welcome Agent</h1>
+      </div>
+      <div class="text-gray-500 mb-7 text-sm md:text-base">Summary of your students, applications, partners, and recent activities</div>
+      <!-- Info Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 mb-8 max-w-full">
+        <div class="bg-blue-50 rounded-xl p-3 md:p-4 flex flex-col gap-1">
+          <div class="flex items-center mb-2">
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl"><i class="fas fa-users"></i></div>
+          </div>
+          <div class="text-2xl font-bold text-gray-900">42</div>
+          <div class="text-gray-700 text-base font-medium">Students</div>
+          <div class="text-gray-400 text-xs">Active students</div>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-3 md:p-4 flex flex-col gap-1">
+          <div class="flex items-center mb-2">
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl"><i class="fas fa-file-alt"></i></div>
+          </div>
+          <div class="text-2xl font-bold text-gray-900">18</div>
+          <div class="text-gray-700 text-base font-medium">Applications</div>
+          <div class="text-gray-400 text-xs">Pending applications</div>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-3 md:p-4 flex flex-col gap-1">
+          <div class="flex items-center mb-2">
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl"><i class="fas fa-university"></i></div>
+          </div>
+          <div class="text-2xl font-bold text-gray-900">156</div>
+          <div class="text-gray-700 text-base font-medium">Universities</div>
+          <div class="text-gray-400 text-xs">Partner institutions</div>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-3 md:p-4 flex flex-col gap-1">
+          <div class="flex items-center mb-2">
+            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl"><i class="far fa-check-circle"></i></div>
+          </div>
+          <div class="text-2xl font-bold text-gray-900">24</div>
+          <div class="text-gray-700 text-base font-medium">Acceptances</div>
+          <div class="text-gray-400 text-xs">This month</div>
+        </div>
+      </div>
+
+      <!-- Recent Applications Table -->
+      <div class="overflow-x-auto rounded-lg mb-8 border border-gray-200 shadow-md">
+        <div class="min-w-[900px] bg-white p-6 rounded-lg">
+          <h2 class="text-3xl font-extrabold text-blue-700 mb-6 select-none">Recent Applications</h2>
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="text-sm text-gray-500 border-b border-gray-300 bg-blue-50">
+                <th class="py-3 px-4 font-semibold tracking-wide">ID</th>
+                <th class="py-3 px-4 font-semibold tracking-wide">Name</th>
+                <th class="py-3 px-4 font-semibold tracking-wide">University Name</th>
+                <th class="py-3 px-4 font-semibold tracking-wide">Applied Courses</th>
+                <th class="py-3 px-4 font-semibold tracking-wide">Start Date</th>
+                <th class="py-3 px-4 font-semibold tracking-wide">Application Status</th>
+                <th class="py-3 px-4 font-semibold tracking-wide text-center">View</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700 text-sm">
+              <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-medium">100512</td>
+                <td class="py-3 px-4">Emma Wilson</td>
+                <td class="py-3 px-4">University of Toronto</td>
+                <td class="py-3 px-4">Computer Science, Data Science</td>
+                <td class="py-3 px-4">Sep 2025</td>
+                <td class="py-3 px-4">Application Submitted</td>
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <a href="StudentView.html" title="View"><button class="text-gray-500 hover:text-blue-600"><i class="fas fa-eye"></i></button></a>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-medium">100499</td>
+                <td class="py-3 px-4">James Chen</td>
+                <td class="py-3 px-4">MIT</td>
+                <td class="py-3 px-4">Electrical Engineering</td>
+                <td class="py-3 px-4">Jan 2026</td>
+                <td class="py-3 px-4">Conditional Offer Received</td>
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <button class="text-gray-500 hover:text-blue-600" title="View"><i class="fas fa-eye"></i></button>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-medium">100421</td>
+                <td class="py-3 px-4">Sophia Rodriguez</td>
+                <td class="py-3 px-4">Oxford University</td>
+                <td class="py-3 px-4">Business Administration</td>
+                <td class="py-3 px-4">Sep 2026</td>
+                <td class="py-3 px-4">Unconditional Offer Received</td>
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <button class="text-gray-500 hover:text-blue-600" title="View"><i class="fas fa-eye"></i></button>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-medium">100350</td>
+                <td class="py-3 px-4">Michael Kim</td>
+                <td class="py-3 px-4">University of Melbourne</td>
+                <td class="py-3 px-4">Mechanical Engineering</td>
+                <td class="py-3 px-4">June 2026</td>
+                <td class="py-3 px-4">Payment Cleared</td>
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <button class="text-gray-500 hover:text-blue-600" title="View"><i class="fas fa-eye"></i></button>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-medium">100280</td>
+                <td class="py-3 px-4">Olivia Johnson</td>
+                <td class="py-3 px-4">ETH Zurich</td>
+                <td class="py-3 px-4">Physics</td>
+                <td class="py-3 px-4">Dec 2025</td>
+                <td class="py-3 px-4">CAS Documents</td>
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <button class="text-gray-500 hover:text-blue-600" title="View"><i class="fas fa-eye"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="mb-8">
+        <div class="font-semibold mb-2">Recent Activity</div>
+        <div class="w-full rounded-xl bg-white border border-gray-100 shadow-sm divide-y divide-gray-100">
+          <!-- Activity 1 -->
+          <div class="flex items-center py-4 px-4 md:px-6">
+            <div class="flex items-start space-x-3 w-4/5 md:w-3/5">
+              <span class="mt-1 h-8 w-8 flex items-center justify-center bg-blue-100 text-blue-500 rounded-lg">
+                <i class="fas fa-plus-circle text-lg"></i>
+              </span>
+              <div>
+                <div class="font-medium text-gray-900">New Application Created</div>
+                <div class="text-sm text-gray-500">
+                  Emma Wilson • University of Toronto • 2 hours ago
+                </div>
+              </div>
+            </div>
+            <div class="flex-1 flex justify-end">
+              <i class="fas fa-arrow-right text-gray-400"></i>
+            </div>
+          </div>
+          <!-- Activity 2 -->
+          <div class="flex items-center py-4 px-4 md:px-6">
+            <div class="flex items-start space-x-3 w-4/5 md:w-3/5">
+              <span class="mt-1 h-8 w-8 flex items-center justify-center bg-blue-100 text-blue-500 rounded-lg">
+                <i class="fas fa-file-upload text-lg"></i>
+              </span>
+              <div>
+                <div class="font-medium text-gray-900">Documents Uploaded</div>
+                <div class="text-sm text-gray-500">
+                  James Chen • MIT • 5 hours ago
+                </div>
+              </div>
+            </div>
+            <div class="flex-1 flex justify-end">
+              <i class="fas fa-arrow-right text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Deadlines -->
+      <div class="mb-8">
+        <div class="font-semibold mb-2">Upcoming Deadlines</div>
+        <div class="w-full rounded-xl bg-white border border-gray-100 shadow-sm divide-y divide-gray-100">
+          <!-- Deadline 1 -->
+          <div class="flex items-center py-4 px-4 md:px-6">
+            <div class="flex items-start space-x-3 w-4/5 md:w-4/6">
+              <span class="mt-1 h-8 w-8 flex items-center justify-center bg-blue-100 text-blue-500 rounded-lg">
+                <i class="fas fa-exclamation-triangle text-lg"></i>
+              </span>
+              <div>
+                <div class="font-medium text-gray-900">Document Submission</div>
+                <div class="text-sm text-gray-500">
+                  James Chen • MIT • Due Tomorrow
+                </div>
+              </div>
+            </div>
+            <div class="flex-1 flex justify-end">
+              <i class="far fa-bell text-gray-400"></i>
+            </div>
+          </div>
+          <!-- Deadline 2 -->
+          <div class="flex items-center py-4 px-4 md:px-6">
+            <div class="flex items-start space-x-3 w-4/5 md:w-4/6">
+              <span class="mt-1 h-8 w-8 flex items-center justify-center bg-blue-100 text-blue-500 rounded-lg">
+                <i class="fas fa-money-check-alt text-lg"></i>
+              </span>
+              <div>
+                <div class="font-medium text-gray-900">Application Fee Payment</div>
+                <div class="text-sm text-gray-500">
+                  Olivia Johnson • ETH Zurich • Due in 3 days
+                </div>
+              </div>
+            </div>
+            <div class="flex-1 flex justify-end">
+              <i class="far fa-bell text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Footer Section -->
+    <footer class="bg-white border-t border-gray-200 pt-8 pb-7 w-full">
+      <div class="max-w-[1600px] mx-auto px-4 sm:px-10 flex flex-col items-center justify-center gap-2">
+        <div class="flex gap-4 mb-3">
+          <a href="#" class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition" title="Facebook"><i class="fab fa-facebook-f text-blue-600 text-lg"></i></a>
+          <a href="#" class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition" title="Twitter"><i class="fab fa-twitter text-blue-500 text-lg"></i></a>
+          <a href="#" class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition" title="LinkedIn"><i class="fab fa-linkedin-in text-blue-700 text-lg"></i></a>
+          <a href="#" class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition" title="Instagram"><i class="fab fa-instagram text-pink-500 text-lg"></i></a>
+        </div>
+        <div class="text-xs text-gray-400 text-center">
+          © EduConnect 2025. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script>
+      // Toggle NAV active highlight on click (both desktop and mobile)
+      function setActiveMenu(link, allLinks) {
+        allLinks.forEach(el => {
+          el.classList.remove('active-menu');
+          el.classList.remove('active-bg');
+        });
+        link.classList.add('active-menu');
+        link.classList.add('active-bg');
+      }
+
+      // Scroll spy to highlight active section
+      function handleScroll() {
+        const sections = document.querySelectorAll('section');
+        if (sections.length === 0) {
+          // No sections to scroll spy on, do not override active menu
+          return;
+        }
+        const navLinks = document.querySelectorAll('.nav-menu-link');
+
+        let currentSection = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.scrollY >= (sectionTop - 100) && window.scrollY < (sectionTop + sectionHeight - 100)) {
+            currentSection = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active-menu');
+          link.classList.remove('active-bg');
+          if (link.getAttribute('href') === `#${currentSection}`) {
+            link.classList.add('active-menu');
+            link.classList.add('active-bg');
+          }
+        });
+
+        // If no section matched, highlight Dashboard menu by default
+        if (!currentSection) {
+          const dashboardLink = document.getElementById('dashboard-link');
+          const dashboardLinkMobile = document.getElementById('dashboard-link-m');
+          dashboardLink.classList.add('active-menu', 'active-bg');
+          dashboardLinkMobile.classList.add('active-menu', 'active-bg');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // Desktop nav
+        const menuLinks = document.querySelectorAll('.nav-menu-link');
+        menuLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            setActiveMenu(this, menuLinks);
+          });
+        });
+
+        // Mobile menu controls
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+        function openMobileMenu() {
+          mobileMenuOverlay.classList.remove('hidden');
+          mobileMenu.classList.remove('translate-x-full');
+          document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+          mobileMenuOverlay.classList.add('hidden');
+          mobileMenu.classList.add('translate-x-full');
+          document.body.style.overflow = '';
+        }
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        closeMobileMenu.addEventListener('click', closeMenu);
+        mobileMenuOverlay.addEventListener('click', closeMenu);
+
+        // Mobile nav active - sync with desktop nav
+        const currentPath = window.location.pathname;
+        [
+          {id: 'dashboard-link-m', href: 'AgentDashboard.html'},
+          {id: 'students-link-m', href: '#students'},
+          {id: 'universities-link-m', href: '#universities'},
+          {id: 'applications-link-m', href: 'ApplicationDash.html'}
+        ].forEach(item => {
+          const link = document.getElementById(item.id);
+          if (link) {
+            // Set initial active state based on current page
+            if (item.href === currentPath) {
+              link.classList.add('active-menu', 'active-bg');
+            }
+            // Add click handler
+            link.addEventListener('click', function () {
+              const mobileLinks = Array.from(link.parentNode.querySelectorAll('.nav-menu-link'));
+              setActiveMenu(link, mobileLinks);
+              // Also update desktop nav if it exists
+              const desktopLink = document.getElementById(item.id.replace('-m', ''));
+              if (desktopLink) {
+                const desktopLinks = Array.from(desktopLink.parentNode.parentNode.querySelectorAll('.nav-menu-link'));
+                setActiveMenu(desktopLink, desktopLinks);
+              }
+            });
+          }
+        });
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Initialize on load
+        handleScroll();
+      });
+    </script>
+    <script>
+  // Profile Menu Toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const profileButton = document.getElementById('profileButton');
+    const profileMenu = document.getElementById('profileMenu');
+    
+    // Toggle menu on profile button click
+    profileButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      profileMenu.classList.toggle('hidden');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!profileButton.contains(e.target)) {
+        profileMenu.classList.add('hidden');
+      }
+    });
+    
+    // Logout handler
+    window.handleLogout = function() {
+      // Add any cleanup logic here (e.g., clearing session storage)
+      window.location.href = '../Login.html'; // Redirect to login page
+    };
+  });
+</script>
+  </body>
+</html>

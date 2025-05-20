@@ -1,0 +1,177 @@
+<html>
+  <head>
+    <title>EduConnect - Agent Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;500;400&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', Arial, sans-serif;
+      }
+      .custom-bg {
+        background: linear-gradient(112deg, #0061a8b8 30%, #1d2b64b3 100%);
+      }
+    </style>
+  </head>
+  <body class="antialiased bg-gray-50 min-h-screen">
+    <div class="w-full min-h-screen flex flex-col md:flex-row border border-gray-300">
+      <!-- Left Side: Welcome/Image -->
+      <div class="md:w-1/2 w-full h-80 md:h-auto relative flex items-start justify-start">
+        <img src="https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&w=900&q=80" alt="University building with clock tower, students walking on green campus" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-700/70 via-blue-600/60 to-green-600/60"></div>
+        <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center pl-6 md:pl-16 pt-12">
+          <div class="flex items-center mb-10 mt-4">
+            <i class="fas fa-graduation-cap text-white text-2xl mr-3"></i>
+            <span class="text-white text-lg font-bold tracking-tight">EduConnect</span>
+          </div>
+          <h1 class="text-white font-extrabold text-3xl md:text-4xl mb-3">Welcome to EduConnect</h1>
+          <p class="text-white text-lg md:text-base font-medium opacity-90">
+            Your gateway to global education opportunities
+          </p>
+        </div>
+      </div>
+      <!-- Right Panel -->
+      <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-12 bg-white">
+        <div class="w-full max-w-lg bg-white shadow-2xl rounded-2xl px-10 py-12 border border-gray-300">
+          <h2 class="text-3xl font-extrabold mb-10 text-center text-gray-900" style="font-family: 'Montserrat', Arial, sans-serif;">
+            Agent Signup
+          </h2>
+          <form id="signup-form" class="space-y-6">
+            <!-- Agency Name -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="agencyName">Agency Name/Full Name</label>
+              <input id="agencyName/fullName" name="agencyName/fullName" type="text" autocomplete="organization"
+                placeholder="Enter your agency name"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              />
+            </div>
+           
+            <!-- Email -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="email">Email Address</label>
+              <input id="email" name="email" type="email" autocomplete="email"
+                placeholder="Enter your email"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              />
+            </div>
+            <!-- Mobile Number -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="mobile">Mobile Number</label>
+              <input id="mobile" name="mobile" type="tel" autocomplete="tel"
+                placeholder="Enter your mobile number"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              />
+            </div>
+            <!-- Password -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="password">Password</label>
+              <input id="password" name="password" type="password"
+                placeholder="Create a password"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              />
+            </div>
+            <!-- Confirm Password -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="confirmPassword">Confirm Password</label>
+              <input id="confirmPassword" name="confirmPassword" type="password"
+                placeholder="Retype your password"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              />
+            </div>
+            <!-- Region -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="region">Region</label>
+              <select id="region" name="region"
+                class="w-full rounded-lg border border-gray-300 bg-gray-50 focus:ring-4 focus:ring-blue-400 focus:border-blue-500 py-3 px-4 text-lg font-semibold placeholder-gray-400 transition shadow-sm"
+              >
+                <option value="">Select a region</option>
+                <option value="north-america">North America</option>
+                <option value="europe">Europe</option>
+                <option value="asia">Asia</option>
+                <option value="africa">Africa</option>
+                <option value="oceania">Oceania</option>
+                <option value="south-america">South America</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+			<div>
+              <label class="block text-sm font-medium mb-1" for="country">Country</label>
+              <select id="country" class="w-full rounded-lg bg-white border border-gray-300 text-gray-900 text-lg font-semibold px-4 py-3 focus:outline-none focus:ring-4 focus:ring-blue-400">
+                <option value="" selected disabled>Select country</option>
+              </select>
+            </div>
+			
+            <!-- File Upload -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="photo">Upload ID/Passport</label>
+              <input id="photo" name="photo" type="file"
+                class="block w-full text-base text-gray-600 file:mr-4 file:py-3 file:px-5 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                accept="image/*"
+              />
+            </div>
+			
+			<!-- File Upload -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-1" for="photo">Upload Photo</label>
+              <input id="photo" name="photo" type="file"
+                class="block w-full text-base text-gray-600 file:mr-4 file:py-3 file:px-5 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                accept="image/*"
+              />
+            </div>
+			
+            <!-- Button -->
+            <div>
+              <button
+                type="submit"
+                class="w-full py-3 mt-2 rounded-lg bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.05] focus:outline-none focus:ring-4 focus:ring-blue-400"
+                style="font-family: 'Montserrat', Arial, sans-serif;"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <script>
+      document.getElementById('signup-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Signup form submitted!');
+      });
+	   (function(){
+    const countries = [
+      "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
+      "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+      "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia",
+      "Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica",
+      "Croatia","Cuba","Cyprus","Czechia","Democratic Republic of the Congo","Denmark","Djibouti","Dominica",
+      "Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia",
+      "Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea",
+      "Guinea-Bissau","Guyana","Haiti","Holy See","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq",
+      "Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos",
+      "Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi",
+      "Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova",
+      "Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands",
+      "New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau",
+      "Palestine State","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania",
+      "Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
+      "Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia",
+      "Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan",
+      "Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga",
+      "Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
+      "United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Yemen",
+      "Zambia","Zimbabwe"
+    ];
+    const select = document.getElementById('country');
+    countries.forEach(country => {
+      const opt = document.createElement('option');
+      opt.value = country;
+      opt.textContent = country;
+      select.appendChild(opt);
+    });
+  })();
+    </script>
+  </body>
+</html>

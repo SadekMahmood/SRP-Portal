@@ -1,0 +1,760 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   EduRecruit - Universities
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+   body {
+            font-family: 'Inter', sans-serif;
+        }
+  </style>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    color: #374151;
+  }
+  .label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+  }
+  .input-url, .input-file-label {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: #111827;
+    outline-offset: 2px;
+    transition: border-color 0.2s ease;
+  }
+  .input-url:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.25);
+  }
+  .input-file-container {
+    margin-top: 0.75rem;
+  }
+  .input-file-label {
+    display: inline-block;
+    cursor: pointer;
+    background-color: #1f2937;
+    color: white;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    user-select: none;
+  }
+  .input-file-label:hover {
+    background-color: #111827;
+  }
+  .input-file {
+    display: none;
+  }
+  .preview-container {
+    margin-top: 1rem;
+    max-width: 280px;
+    max-height: 140px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: white;
+  }
+  .preview-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .note {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+</style>
+ </head>
+  <body class="bg-gray-50">
+  <div class="flex flex-col md:flex-row h-screen">
+   <!-- Sidebar -->
+   <aside class="w-full md:w-64 bg-white shadow-lg flex-shrink-0">
+    <div class="p-4 border-b">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">EduRecruit</h1>
+            <button class="text-gray-500 hover:text-gray-700 md:hidden" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <nav class="p-4 hidden md:block" id="sidebarNav">
+     <ul class="space-y-2">
+      <li>
+       <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="index.html">
+        <i class="fas fa-th-large w-6">
+        </i>
+        <span>
+         Dashboard
+        </span>
+       </a>
+      </li>
+      <li>
+       <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="applicants.html">
+        <i class="fas fa-users w-6">
+        </i>
+        <span>
+         Applicants
+        </span>
+       </a>
+      </li>
+      <li>
+       <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="agents.html">
+        <i class="fas fa-user-tie w-6">
+        </i>
+        <span>
+         Agents
+        </span>
+       </a>
+      </li>
+      <li>
+       <a aria-current="page" class="flex items-center p-2 text-gray-700 bg-gray-100 rounded-lg sidebar-link" href="universities.html">
+        <i class="fas fa-university w-6">
+        </i>
+        <span>
+         Universities
+        </span>
+       </a>
+      </li>
+      <li>
+       <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="courses.html">
+        <i class="fas fa-book w-6">
+        </i>
+        <span>
+         Courses
+        </span>
+       </a>
+      </li>
+      <li>
+       <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="reports.html">
+        <i class="fas fa-chart-bar w-6">
+        </i>
+        <span>
+         Reports
+        </span>
+       </a>
+      </li>
+     </ul>
+     <div class="mt-8">
+      <h3 class="px-2 text-xs font-semibold text-gray-600 uppercase">
+       Settings
+      </h3>
+      <ul class="mt-3 space-y-2">
+       <li>
+        <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="profile.html">
+         <i class="fas fa-user w-6">
+         </i>
+         <span>
+          Profile
+         </span>
+        </a>
+       </li>
+       <li>
+        <a class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg sidebar-link" href="#" onclick="confirmLogout(event)">
+         <i class="fas fa-sign-out-alt w-6">
+         </i>
+         <span>
+          Logout
+         </span>
+        </a>
+       </li>
+      </ul>
+     </div>
+    </nav>
+   </aside>
+   <!-- Main Content -->
+   <main class="flex-1 overflow-y-auto p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+     <!-- Overview Cards -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+       <div class="flex items-center">
+        <div class="p-3 bg-blue-100 rounded-full">
+         <i class="fas fa-university text-blue-600">
+         </i>
+        </div>
+        <div class="ml-4">
+         <h3 class="text-sm text-gray-500">
+          Total Universities
+         </h3>
+         <p class="text-2xl font-bold">
+          22
+         </p>
+         <p class="text-sm text-gray-500">
+          Partnered institutions
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+       <div class="flex items-center">
+        <div class="p-3 bg-green-100 rounded-full">
+         <i class="fas fa-book text-green-600">
+         </i>
+        </div>
+        <div class="ml-4">
+         <h3 class="text-sm text-gray-500">
+          Courses
+         </h3>
+         <p class="text-2xl font-bold">
+          156
+         </p>
+         <p class="text-sm text-gray-500">
+          Programs offered
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+       <div class="flex items-center">
+        <div class="p-3 bg-yellow-100 rounded-full">
+         <i class="fas fa-calendar text-yellow-600">
+         </i>
+        </div>
+        <div class="ml-4">
+         <h3 class="text-sm text-gray-500">
+          Upcoming Deadlines
+         </h3>
+         <p class="text-2xl font-bold">
+          8
+         </p>
+         <p class="text-sm text-gray-500">
+          Active application periods
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- Universities List -->
+     <div class="bg-white rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <h2 class="text-lg font-semibold mb-4 sm:mb-0">
+         Universities List
+        </h2>
+        <button class="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 whitespace-nowrap">
+         Download List
+        </button>
+       </div>
+       <div class="mt-4">
+        <div class="relative">
+         <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <i class="fas fa-search text-gray-400">
+          </i>
+         </span>
+         <input class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" placeholder="Search by name, country, or tag" type="text"/>
+        </div>
+       </div>
+      </div>
+      <div class="overflow-x-auto">
+       <table class="w-full min-w-[700px]">
+        <thead class="bg-gray-50">
+         <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           ID
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           University
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           Location
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           Type
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           Courses
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           Status
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+           Actions
+          </th>
+         </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+         <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+           1001
+          </td>
+          <td class="px-6 py-4">
+           <div class="flex items-center">
+            <img alt="Logo of Global Tech University, a blue and white emblem with medical symbols" class="h-8 w-8 rounded-full object-cover" height="64" src="https://storage.googleapis.com/a1aa/image/23539fd1-190d-4eb6-712e-0285a1dcb1fb.jpg" width="64"/>
+            <div class="ml-2">
+             <div class="font-medium text-gray-900">
+              Global Tech University
+             </div>
+            </div>
+           </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           United States, New York
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           technology, engineering, computer science
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           32
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <span class="px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+            Active
+           </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <div class="flex space-x-3 text-gray-400">
+            <button aria-label="Edit Global Tech University" class="hover:text-gray-600">
+             <i class="fas fa-edit">
+             </i>
+            </button>
+            <button aria-label="Delete Global Tech University" class="hover:text-gray-600">
+             <i class="fas fa-trash">
+             </i>
+            </button>
+           <button aria-label="View Global Tech University" class="hover:text-gray-600" onclick="window.location.href='uniview.html'">
+            <i class="fas fa-eye"></i>
+        </button>
+        <div class="modal-backdrop" id="modalBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+        <div class="modal" style="background:#fff; border-radius:8px; max-width:750px; width:95%; padding:0; position:relative;">
+         <button id="closeModalBtn" style="position:absolute; top:10px; right:20px; background:none; border:none; font-size:2rem; color:#888; cursor:pointer;">&times;</button>
+             <div id="modalContent" style="max-height:80vh; overflow:auto;"></div>
+            </div>
+            </div>
+           </div>
+          </td>
+         </tr>
+         <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+           1002
+          </td>
+          <td class="px-6 py-4">
+           <div class="flex items-center">
+            <img alt="Logo of Massachusetts Institute of Technology, a red and white stylized MIT emblem" class="h-8 w-8 rounded-full object-cover" height="64" src="https://storage.googleapis.com/a1aa/image/5564a68a-4cff-4c24-ca76-1270b36230fb.jpg" width="64"/>
+            <div class="ml-2">
+             <div class="font-medium text-gray-900">
+              Massachusetts Institute of Technology
+             </div>
+             <div class="text-sm text-gray-500">
+              USA, Cambridge
+             </div>
+            </div>
+           </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           USA, Cambridge
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           Tech
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           45
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <span class="px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+            Active
+           </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <div class="flex space-x-3 text-gray-400">
+            <button aria-label="Edit Massachusetts Institute of Technology" class="hover:text-gray-600">
+             <i class="fas fa-edit">
+             </i>
+            </button>
+            <button aria-label="Delete Massachusetts Institute of Technology" class="hover:text-gray-600">
+             <i class="fas fa-trash">
+             </i>
+            </button>
+            <button aria-label="View Massachusetts Institute of Technology" class="hover:text-gray-600">
+             <i class="fas fa-eye">
+             </i>
+            </button>
+           </div>
+          </td>
+         </tr>
+         <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+           1003
+          </td>
+          <td class="px-6 py-4">
+           <div class="flex items-center">
+            <img alt="Logo of University College London, a black and white circular emblem with UCL letters" class="h-8 w-8 rounded-full object-cover" height="64" src="https://storage.googleapis.com/a1aa/image/12244d70-2585-4b6c-6d4f-b9d84c2149d6.jpg" width="64"/>
+            <div class="ml-2">
+             <div class="font-medium text-gray-900">
+              University College London
+             </div>
+             <div class="text-sm text-gray-500">
+              UK, London
+             </div>
+            </div>
+           </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           UK, London
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           Arts
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           28
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <span class="px-2 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
+            Inactive
+           </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <div class="flex space-x-3 text-gray-400">
+            <button aria-label="Edit University College London" class="hover:text-gray-600">
+             <i class="fas fa-edit">
+             </i>
+            </button>
+            <button aria-label="Delete University College London" class="hover:text-gray-600">
+             <i class="fas fa-trash">
+             </i>
+            </button>
+            <button aria-label="View University College London" class="hover:text-gray-600">
+             <i class="fas fa-eye">
+             </i>
+            </button>
+           </div>
+          </td>
+         </tr>
+         <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+           1004
+          </td>
+          <td class="px-6 py-4">
+           <div class="flex items-center">
+            <img alt="Logo of Stanford University, a red and white tree emblem" class="h-8 w-8 rounded-full object-cover" height="64" src="https://storage.googleapis.com/a1aa/image/fde5155c-6ea3-445d-9177-d8f2522c2ceb.jpg" width="64"/>
+            <div class="ml-2">
+             <div class="font-medium text-gray-900">
+              Stanford University
+             </div>
+             <div class="text-sm text-gray-500">
+              USA, Stanford
+             </div>
+            </div>
+           </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           USA, Stanford
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           Tech
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           40
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <span class="px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+            Active
+           </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <div class="flex space-x-3 text-gray-400">
+            <button aria-label="Edit Stanford University" class="hover:text-gray-600">
+             <i class="fas fa-edit">
+             </i>
+            </button>
+            <button aria-label="Delete Stanford University" class="hover:text-gray-600">
+             <i class="fas fa-trash">
+             </i>
+            </button>
+            <button aria-label="View Stanford University" class="hover:text-gray-600">
+             <i class="fas fa-eye">
+             </i>
+            </button>
+           </div>
+          </td>
+         </tr>
+         <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+           1005
+          </td>
+          <td class="px-6 py-4">
+           <div class="flex items-center">
+            <img alt="Logo of University of Tokyo, a red circular emblem with Japanese characters" class="h-8 w-8 rounded-full object-cover" height="64" src="https://storage.googleapis.com/a1aa/image/f91e29a3-bf81-4d74-b38c-99ebe66b98db.jpg" width="64"/>
+            <div class="ml-2">
+             <div class="font-medium text-gray-900">
+              University of Tokyo
+             </div>
+             <div class="text-sm text-gray-500">
+              Japan, Tokyo
+             </div>
+            </div>
+           </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           Japan, Tokyo
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           General
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           35
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <span class="px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+            Active
+           </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+           <div class="flex space-x-3 text-gray-400">
+            <button aria-label="Edit University of Tokyo" class="hover:text-gray-600">
+             <i class="fas fa-edit">
+             </i>
+            </button>
+            <button aria-label="Delete University of Tokyo" class="hover:text-gray-600">
+             <i class="fas fa-trash">
+             </i>
+            </button>
+            <button aria-label="View University of Tokyo" class="hover:text-gray-600">
+             <i class="fas fa-eye">
+             </i>
+            </button>
+           </div>
+          </td>
+         </tr>
+
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <!-- Add University Form -->
+     <div class="mt-8 bg-white rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+       <h2 class="text-lg font-semibold">
+        Add University
+       </h2>
+      </div>
+      <div class="p-6">
+       <form class="space-y-6" novalidate="">
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="universityName">
+          University Name
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="universityName" name="universityName" placeholder="Enter university name" required="" type="text"/>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="location">
+          Country &amp; City
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="location" name="location" placeholder="e.g. Bangladesh, Dhaka" required="" type="text"/>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="accreditation">
+          Accreditation Info
+         </label>
+         <textarea class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="accreditation" name="accreditation" placeholder="Enter accreditation details" required="" rows="3"></textarea>
+        </div>
+
+
+        <div>
+        <label class="label" for="logoUrl">University Logo</label>
+        <input
+         class="input-url"
+         id="logoUrl"
+         name="logoUrl"
+         type="url"
+       placeholder="Paste logo URL (optional)"
+          autocomplete="off"
+         />
+        <div class="input-file-container">
+        <label for="fileUpload" class="input-file-label">Or Upload Logo</label>
+        <input id="fileUpload" class="input-file" type="file" accept="image/*" />
+         </div>
+        <div class="note">Supported formats: PNG, JPG, JPEG, GIF. Max size: 5MB.</div>
+        <div class="preview-container" id="previewContainer" style="display:none;">
+         <img id="previewImage" src="#" alt="Logo Preview" />
+         </div>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="partnerSince">
+          Partner Since
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="partnerSince" name="partnerSince" placeholder="YYYY-MM-DD" type="date"/>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="contactInfo">
+          Contact Info
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="contactInfo" name="contactInfo" placeholder="Email or phone" type="text"/>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="websiteUrl">
+          Website URL
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="websiteUrl" name="websiteUrl" placeholder="Enter website URL" type="url"/>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="status">
+          Status
+         </label>
+         <select class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="status" name="status">
+          <option>
+           Active
+          </option>
+          <option>
+           Inactive
+          </option>
+         </select>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-gray-700" for="tags">
+          Tags/Filters
+         </label>
+         <input class="mt-1 w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" id="tags" name="tags" placeholder="e.g. medical, tech, arts" type="text"/>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+         <button class="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800" type="submit">
+          Add University
+         </button>
+         <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200" type="reset">
+          Cancel
+         </button>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <script>
+    // Sidebar toggle for mobile
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        const nav = document.getElementById('sidebarNav');
+        if (nav.classList.contains('hidden')) {
+            nav.classList.remove('hidden');
+        } else {
+            nav.classList.add('hidden');
+        }
+    });
+
+    // Handle sidebar navigation active state
+    $(document).ready(function() {
+        $('.sidebar-link').click(function(e) {
+            $('.sidebar-link').removeClass('bg-gray-100 text-gray-700 font-semibold');
+            $(this).addClass('bg-gray-100 text-gray-700 font-semibold');
+        });
+    });
+
+    function confirmLogout(event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to logout?")) {
+            window.location.href = "Login.html";
+        }
+    }
+  </script>
+  <script>
+  const logoUrlInput = document.getElementById('logoUrl');
+  const fileUploadInput = document.getElementById('fileUpload');
+  const previewContainer = document.getElementById('previewContainer');
+  const previewImage = document.getElementById('previewImage');
+
+  // Show preview from URL on blur
+  logoUrlInput.addEventListener('blur', () => {
+    const url = logoUrlInput.value.trim();
+    if (url && isValidImageUrl(url)) {
+      // Clear file input selection if any
+      fileUploadInput.value = '';
+      previewImage.src = url;
+      previewContainer.style.display = 'block';
+    } else {
+      // Hide preview if URL empty or invalid
+      if (!fileUploadInput.files.length) {
+        previewContainer.style.display = 'none';
+        previewImage.src = '#';
+      }
+    }
+  });
+
+  // Show preview from uploaded file
+  fileUploadInput.addEventListener('change', () => {
+    if (fileUploadInput.files && fileUploadInput.files[0]) {
+      const file = fileUploadInput.files[0];
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload a valid image file.');
+        fileUploadInput.value = '';
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('File size exceeds 5MB. Please upload a smaller file.');
+        fileUploadInput.value = '';
+        return;
+      }
+      // Clear the URL input when uploading a new file
+      logoUrlInput.value = '';
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewContainer.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.style.display = 'none';
+      previewImage.src = '#';
+    }
+  });
+
+  function isValidImageUrl(url) {
+    return (url.match(/\.(jpeg|jpg|gif|png|svg)$/i) != null);
+  }
+</script>
+<script>
+document.getElementById('openModalBtn').addEventListener('click', function() {
+    // Show modal
+    document.getElementById('modalBackdrop').style.display = 'flex';
+    // Load uniview.html content
+    fetch('uniview.html')
+      .then(response => response.text())
+      .then(html => {
+        // Extract only the content inside <body>
+        const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        document.getElementById('modalContent').innerHTML = bodyMatch ? bodyMatch[1] : html;
+      })
+      .catch(() => {
+        document.getElementById('modalContent').innerHTML = '<p style="padding:2rem;">Failed to load content.</p>';
+      });
+});
+
+// Close modal on close button
+document.getElementById('closeModalBtn').addEventListener('click', function() {
+    document.getElementById('modalBackdrop').style.display = 'none';
+    document.getElementById('modalContent').innerHTML = '';
+});
+
+// Close modal when clicking outside modal
+document.getElementById('modalBackdrop').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+        document.getElementById('modalContent').innerHTML = '';
+    }
+});
+
+// Optional: Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") {
+        document.getElementById('modalBackdrop').style.display = 'none';
+        document.getElementById('modalContent').innerHTML = '';
+    }
+});
+</script>
+
+ </body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduRecruit - Courses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+<div class="flex flex-col md:flex-row h-screen">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-white shadow-lg flex-shrink-0">
+            <div class="p-4 border-b">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-xl font-bold">EduRecruit</h1>
+                    <button class="text-gray-500 hover:text-gray-700 md:hidden" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4 hidden md:block" id="sidebarNav">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="index.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-th-large w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="applicants.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-users w-6"></i>
+                            <span>Applicants</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="agents.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-user-tie w-6"></i>
+                            <span>Agents</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="universities.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-university w-6"></i>
+                            <span>Universities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="courses.html" class="flex items-center p-2 text-gray-700 bg-gray-100 rounded-lg">
+                            <i class="fas fa-book w-6"></i>
+                            <span>Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-chart-bar w-6"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="px-2 text-xs font-semibold text-gray-600 uppercase">Settings</h3>
+                    <ul class="mt-3 space-y-2">
+                        <li>
+                            <a href="profile.html" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                                <i class="fas fa-user w-6"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="confirmLogout(event)" class="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+
+                                <i class="fas fa-sign-out-alt w-6"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8">
+            <div class="max-w-7xl mx-auto">
+                <!-- Overview Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i class="fas fa-book text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-sm text-gray-500">Total Courses</h3>
+                                <p class="text-2xl font-bold">156</p>
+                                <p class="text-sm text-gray-500">Programs offered</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i class="fas fa-university text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-sm text-gray-500">Active Universities</h3>
+                                <p class="text-2xl font-bold">22</p>
+                                <p class="text-sm text-gray-500">Offering courses</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i class="fas fa-file-alt text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-sm text-gray-500">Open Applications</h3>
+                                <p class="text-2xl font-bold">34</p>
+                                <p class="text-sm text-gray-500">Currently accepting</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courses List -->
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="p-6 border-b">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-lg font-semibold">Courses List</h2>
+                            <button class="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800">
+                                Download List
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </span>
+                                <input type="text" placeholder="Type course name or ID" class="w-full pl-10 pr-4 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">University</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Country</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deadline</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <!-- Sample course rows -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">ID001</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=CS" alt="">
+                                            <div class="ml-2">
+                                                <div>BSc Computer Science</div>
+                                                <div class="text-sm text-gray-500">4 years</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">Oxford University</td>
+                                    <td class="px-6 py-4">UK</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+                                            Open
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">2024-08-15</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex space-x-3">
+                                            <button class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <button class="text-gray-400 hover:text-gray-600">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- More course rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add Course Form -->
+                
+                <div class="mt-8 bg-white rounded-lg shadow-sm">
+                    <div class="p-6 border-b">
+                        <h2 class="text-lg font-semibold">Add Course</h2>
+                    </div>
+                    <div class="p-6">
+                        <form class="space-y-6">
+                             <div>
+                            <label class="block text-sm font-medium mb-1" for="region">Select Region</label>
+                             <select id="region" class="w-full rounded-lg bg-white border border-gray-200 text-gray-900 text-sm px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                             <option value="" selected disabled>Choose a region</option>
+                                <option value="europe">Europe</option>
+                                <option value="northAmerica">North America</option>
+                                 <option value="asia">Asia</option>
+                                <option value="australia">Australia</option>
+                                </select>
+                                 </div>
+                            <div>
+                            <label class="block text-sm font-medium mb-1" for="programType">Type of Programme</label>
+                            <select id="programType" class="w-full rounded-lg bg-white border border-gray-200 text-gray-900 text-sm px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                             <option value="" selected disabled>Select program type</option>
+                             <option value="undergraduate">Undergraduate</option>
+                            <option value="postgraduate">Postgraduate</option>
+                             <option value="diploma">Diploma</option>
+                             <option value="Research">Research(MRes)</option>
+                             <option value="Research ">Research(DBA)</option>
+                             <option value="Research ">Research(PhD)</option>
+                             </select>
+                                </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Course Name/Program Name</label>
+                                <input type="text" placeholder="Enter course name" class="mt-1 w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">University</label>
+                                <select class="mt-1 w-full p-2 border rounded-lg">
+                                    <option>Select university</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Department</label>
+                                <input type="text" placeholder="Enter department" class="mt-1 w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Duration</label>
+                                <input type="text" placeholder="e.g. 4 years" class="mt-1 w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Application Deadline</label>
+                                <input type="text" placeholder="Select deadline" class="mt-1 w-full p-2 border rounded-lg">
+                            </div>
+                            <div>
+        <label for="courseStartDate" class="block text-sm font-medium text-gray-700">Course Start Date</label>
+        <input 
+          type="date" 
+          id="courseStartDate" 
+          name="courseStartDate" 
+          placeholder="Select start date" 
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          />
+      </div>console.log("Sidebar link clicked");
+console.log("Logout confirmed");
+console.log("Course added successfully");
+console.log("Course updated successfully");
+console.log("Course deleted successfully");
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Status</label>
+                                <select class="mt-1 w-full p-2 border rounded-lg">
+                                    <option>Open/Closed</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Description</label>
+                                <textarea placeholder="Enter course description" class="mt-1 w-full p-2 border rounded-lg" rows="4"></textarea>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800">
+                                    Save
+                                </button>
+                                <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const nav = document.getElementById('sidebarNav');
+            if (nav.classList.contains('hidden')) {
+                nav.classList.remove('hidden');
+            } else {
+                nav.classList.add('hidden');
+            }
+        });
+
+        $(document).ready(function() {
+            // Add interactivity here
+            $('.sidebar-link').click(function(e) {
+                e.preventDefault();
+                $('.sidebar-link').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+        function confirmLogout(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        if (confirm("Are you sure you want to logout?")) {
+            // Assuming login.html is in the same directory or a relative path.
+            // Adjust 'login.html' if it's located elsewhere. For example, '../login.html' if it's one directory up.
+            window.location.href = "Login.html"; 
+        }
+    }
+    </script>
+
+    <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const dateInput = document.getElementById('courseStartDate');
+      const selectedDate = dateInput.value;
+      if (!selectedDate) return;
+      // Show confirmation message
+      const confirmationEl = document.getElementById('confirmationMessage');
+      confirmationEl.textContent = `Course start date set to: ${selectedDate}`;
+      confirmationEl.classList.remove('hidden');
+      // Here you could send the date to backend, localStorage, or any API
+      console.log('Course start date selected:', selectedDate);
+    }
+  </script>
+</body>
+</html>

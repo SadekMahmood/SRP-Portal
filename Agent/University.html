@@ -1,0 +1,998 @@
+<html>
+  <head>
+    <title>University Directory | EduConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .active-menu {
+        color: #2563eb !important;
+      }
+      .active-bg {
+        background-color: #e0e7ff !important;
+      }
+      .transition-transform {
+        transition: transform 0.25s;
+      }
+      /* Added for scroll spy */
+      .section {
+        min-height: 100vh;
+        padding-top: 80px;
+      }
+      /* Custom styles for search input highlight and modern look */
+      .search-highlight {
+        box-shadow: 0 4px 12px rgb(37 99 235 / 0.3);
+        border: 2px solid #2563eb;
+        background-color: white !important;
+      }
+      .university-item:hover {
+        background-color: #f0f5ff;
+        cursor: pointer;
+      }
+      .university-item.active {
+        background-color: #e0e7ff;
+      }
+      .course-list > li {
+        border-left: 3px solid #2563eb;
+        padding-left: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+      .course-list > li:last-child {
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-[#18181b] min-h-screen flex flex-col">
+    <!-- Topbar -->
+    <header
+      class="w-full border-b border-gray-200 bg-white flex items-center h-16 z-30 fixed top-0"
+    >
+      <nav
+        class="flex flex-1 items-center px-4 md:px-12 w-full relative"
+        aria-label="Primary Navigation"
+      >
+        <span
+          class="font-bold text-lg pr-5 md:pr-8 select-none whitespace-nowrap"
+          >EduConnect</span
+        >
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex text-base flex-1 gap-2 lg:gap-6 items-center ml-1"
+        >
+          <li>
+            <a
+              href="AgentDashboard.html"
+              class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link"
+              id="dashboard-link"
+              ><i class="fas fa-th-large text-gray-500"></i>
+              <span>Dashboard</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="Student.html"
+              class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link"
+              id="students-link"
+              ><i class="fas fa-user-graduate text-gray-500"></i>
+              <span>Students</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="#universities"
+              class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link active-menu active-bg"
+              id="universities-link"
+              ><i class="fas fa-university text-gray-500"></i>
+              <span>Universities</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="ApplicationDash.html"
+              class="flex items-center gap-1 text-gray-700 font-medium py-2 px-3 transition-colors rounded-lg nav-menu-link"
+              id="applications-link"
+              ><i class="fas fa-folder-open text-gray-500"></i>
+              <span>Applications</span></a
+            >
+          </li>
+        </ul>
+        <div class="flex-1 md:hidden"></div>
+        <!-- Right quick buttons -->
+        <div class="flex items-center gap-2 ml-auto">
+          <a
+            href="help.html"
+            class="hidden md:inline-block px-3 py-1.5 rounded-lg text-blue-600 bg-blue-100 font-medium hover:bg-blue-200 text-sm"
+            >Help</a
+          >
+          <a
+            href="NewApplication.html"
+            class="px-3 md:px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow transition"
+            >New Application</a
+          >
+          <!-- Profile Menu -->
+          <div class="relative ml-2">
+            <button
+              id="profileButton"
+              class="h-9 w-9 rounded-full overflow-hidden border border-gray-300 flex-shrink-0 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <img
+                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&amp;w=100&amp;h=100&amp;fit=facearea&amp;facepad=2.0"
+                alt="Profile"
+                class="w-full h-full object-cover"
+              />
+            </button>
+            <!-- Profile Dropdown Menu -->
+            <div
+              id="profileMenu"
+              class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-100 z-50"
+            >
+              <a
+                href="profile.html"
+                class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50"
+                ><i class="fas fa-user w-5"></i>
+                <span>Profile</span></a
+              >
+            
+              <div class="border-t border-gray-100 my-1"></div>
+              <a
+                href="#"
+                class="flex items-center px-4 py-2 text-red-600 hover:bg-gray-50"
+                onclick="handleLogout()"
+                ><i class="fas fa-sign-out-alt w-5"></i>
+                <span>Logout</span></a
+              >
+            </div>
+          </div>
+          <!-- Hamburger mobile menu -->
+          <button
+            id="mobileMenuButton"
+            class="md:hidden ml-1 h-9 w-9 flex items-center justify-center rounded-lg active:bg-gray-100"
+            aria-label="Open menu"
+          >
+            <i class="fas fa-bars text-xl text-gray-600"></i>
+          </button>
+        </div>
+        <!-- Mobile menu overlay -->
+        <div
+          id="mobileMenuOverlay"
+          class="fixed inset-0 z-50 bg-black/30 hidden"
+        ></div>
+        <!-- Mobile Menu -->
+        <div
+          id="mobileMenu"
+          class="fixed top-0 right-0 w-64 max-w-full h-full bg-white shadow-lg z-50 flex flex-col p-5 gap-2 transform translate-x-full transition-transform duration-300 md:hidden"
+          style="transition: transform 0.3s"
+        >
+          <div class="flex w-full justify-between items-center mb-5">
+            <span class="font-bold text-lg">Menu</span>
+            <button
+              id="closeMobileMenu"
+              class="text-gray-500 hover:text-blue-700 h-8 w-8 flex items-center justify-center rounded-md"
+            >
+              <i class="fas fa-times text-2xl"></i>
+            </button>
+          </div>
+          <a
+            href="AgentDashboard.html"
+            class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link"
+            id="dashboard-link-m"
+            ><i class="fas fa-th-large text-gray-500"></i> Dashboard</a
+          >
+          <a
+            href="Student.html"
+            class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link"
+            id="students-link-m"
+            ><i class="fas fa-user-graduate text-gray-500"></i> Students</a
+          >
+          <a
+            href="#universities"
+            class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link active-menu active-bg"
+            id="universities-link-m"
+            ><i class="fas fa-university text-gray-500"></i> Universities</a
+          >
+          <a
+            href="ApplicationDash.html"
+            class="flex gap-2 items-center py-3 px-3 rounded-lg nav-menu-link"
+            id="applications-link-m"
+            ><i class="fas fa-folder-open text-gray-500"></i> Applications</a
+          >
+          <div class="border-t border-gray-200 my-4"></div>
+          <a
+            href="help.html"
+            class="px-3 py-2 rounded-lg text-blue-600 bg-blue-100 font-medium hover:bg-blue-200 text-sm"
+            >Help</a
+          >
+          <a
+            href="NewApplication.html"
+            class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow transition"
+            >New Application</a
+          >
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main content with sections for each menu item -->
+    <main class="flex-1 mt-16">
+      <!-- University Section -->
+      <section
+        id="universities"
+        class="section bg-white px-4 sm:px-6 md:px-10 lg:px-12 pb-8 pt-6 max-w-6xl mx-auto"
+      >
+        <!-- Breadcrumb -->
+        <nav
+          class="flex text-sm text-gray-600 mb-4 pt-2"
+          aria-label="Breadcrumb"
+        >
+          <ol class="flex space-x-2 items-center overflow-x-auto">
+            <li>Dashboard</li>
+            <li>
+              <i class="fas fa-chevron-right text-xs mx-1"></i>
+            </li>
+            <li>Universities</li>
+          </ol>
+        </nav>
+        <!-- Title -->
+        <h1 class="text-lg font-semibold mb-4">University Directory</h1>
+        <!-- Search -->
+        <div class="mb-6 max-w-xs">
+          <label class="block text-xs font-normal mb-1" for="search">
+            Search Universities
+          </label>
+          <div class="relative w-full">
+            <input
+              id="search"
+              type="search"
+              placeholder="Search by name, location, or region"
+              class="w-full rounded-full bg-white text-sm text-gray-900 placeholder-gray-500 py-3 pl-5 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-600 search-highlight shadow-md transition"
+            />
+            <i
+              aria-hidden="true"
+              class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-indigo-600 text-sm pointer-events-none"
+            ></i>
+          </div>
+        </div>
+        <!-- Tabs -->
+        <div
+          class="mb-6 border-b border-gray-200 overflow-x-auto scrollbar-hide"
+          style="scrollbar-width: thin"
+        >
+          <nav
+            class="flex space-x-8 text-xs font-normal text-gray-500 whitespace-nowrap"
+          >
+            <button
+              aria-current="page"
+              class="pb-2 border-b-2 border-indigo-600 text-gray-900 font-semibold"
+              type="button"
+            >
+              All Universities
+            </button>
+            <button class="pb-2 hover:text-gray-900" type="button">
+              Featured
+            </button>
+            <button class="pb-2 hover:text-gray-900" type="button">
+              Top Ranked
+            </button>
+            <button class="pb-2 hover:text-gray-900" type="button">
+              Recently Added
+            </button>
+            <button class="pb-2 hover:text-gray-900" type="button">
+              My Favorites
+            </button>
+          </nav>
+        </div>
+        <!-- Universities count and filter button -->
+        <div class="flex justify-between items-center mb-6">
+          <div class="text-sm font-normal">156 Universities</div>
+          <button
+            class="text-xs font-semibold bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-300 focus:outline-none"
+            type="button"
+          >
+            Filter
+          </button>
+        </div>
+        <!-- University list -->
+        <ul class="space-y-5" id="universityList">
+          <!-- University items will be inserted here by JS -->
+        </ul>
+        <!-- Load More button -->
+        <div class="mt-12 flex justify-center">
+          <button
+            class="text-xs font-semibold bg-gray-200 rounded-full px-4 py-2 hover:bg-gray-300 focus:outline-none"
+            type="button"
+          >
+            Load More
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-white border-t border-gray-200 pt-8 pb-7 w-full">
+      <div
+        class="max-w-[1600px] mx-auto px-4 sm:px-10 flex flex-col items-center justify-center gap-2"
+      >
+        <div class="flex gap-4 mb-3">
+          <a
+            href="#"
+            class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition"
+            title="Facebook"
+            ><i class="fab fa-facebook-f text-blue-600 text-lg"></i
+          ></a>
+          <a
+            href="#"
+            class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition"
+            title="Twitter"
+            ><i class="fab fa-twitter text-blue-500 text-lg"></i
+          ></a>
+          <a
+            href="#"
+            class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition"
+            title="LinkedIn"
+            ><i class="fab fa-linkedin-in text-blue-700 text-lg"></i
+          ></a>
+          <a
+            href="#"
+            class="p-2 rounded-full bg-blue-50 hover:bg-blue-100 transition"
+            title="Instagram"
+            ><i class="fab fa-instagram text-pink-500 text-lg"></i
+          ></a>
+        </div>
+        <div class="text-xs text-gray-400 text-center">
+          © 2023 EduConnect. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // University data with dummy courses and details
+      const universities = [
+        {
+          id: "uni1",
+          name: "University of Toronto",
+          location: "Toronto, Canada",
+          region: "North America",
+          students: 45000,
+          image:
+            "https://storage.googleapis.com/a1aa/image/5c34da4a-8ed3-4c8a-27df-52e84ce878af.jpg",
+          coursesCount: 120,
+          deadline: "2024-08-15",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Arts in Psychology",
+                  startDate: "2024-09-01",
+                },
+                {
+                  name: "Bachelor of Science in Computer Science",
+                  startDate: "2024-09-01",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Business Administration",
+                  startDate: "2024-09-15",
+                },
+                {
+                  name: "Master of Engineering",
+                  startDate: "2024-09-15",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni2",
+          name: "Massachusetts Institute of Technology",
+          location: "Cambridge, USA",
+          region: "North America",
+          students: 11500,
+          image:
+            "https://storage.googleapis.com/a1aa/image/3129df42-d057-4ab8-36e4-f4ac533e7110.jpg",
+          coursesCount: 85,
+          deadline: "2024-07-30",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Science in Mechanical Engineering",
+                  startDate: "2024-09-01",
+                },
+                {
+                  name: "Bachelor of Science in Physics",
+                  startDate: "2024-09-01",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Science in Artificial Intelligence",
+                  startDate: "2024-09-15",
+                },
+                {
+                  name: "PhD in Electrical Engineering",
+                  startDate: "2024-09-15",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni3",
+          name: "Oxford University",
+          location: "Oxford, UK",
+          region: "Europe",
+          students: 24000,
+          image:
+            "https://storage.googleapis.com/a1aa/image/5e7ff848-b4ef-40fa-b45c-02b9206c09e2.jpg",
+          coursesCount: 110,
+          deadline: "2024-08-10",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Arts in History",
+                  startDate: "2024-10-01",
+                },
+                {
+                  name: "Bachelor of Science in Mathematics",
+                  startDate: "2024-10-01",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Philosophy in Economics",
+                  startDate: "2024-10-15",
+                },
+                {
+                  name: "Doctorate in Philosophy",
+                  startDate: "2024-10-15",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni4",
+          name: "University of Melbourne",
+          location: "Melbourne, Australia",
+          region: "Oceania",
+          students: 52000,
+          image:
+            "https://storage.googleapis.com/a1aa/image/a9fbfe76-8fa8-4bf8-a729-10cc6aadfa8a.jpg",
+          coursesCount: 130,
+          deadline: "2024-09-05",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Commerce",
+                  startDate: "2024-09-20",
+                },
+                {
+                  name: "Bachelor of Science in Environmental Science",
+                  startDate: "2024-09-20",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Public Health",
+                  startDate: "2024-09-25",
+                },
+                {
+                  name: "Master of Fine Arts",
+                  startDate: "2024-09-25",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni5",
+          name: "ETH Zurich",
+          location: "Zurich, Switzerland",
+          region: "Europe",
+          students: 21400,
+          image:
+            "https://storage.googleapis.com/a1aa/image/7be28b68-a1e5-447f-60a9-5401a962956e.jpg",
+          coursesCount: 90,
+          deadline: "2024-08-20",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Science in Architecture",
+                  startDate: "2024-09-10",
+                },
+                {
+                  name: "Bachelor of Science in Physics",
+                  startDate: "2024-09-10",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Science in Robotics",
+                  startDate: "2024-09-15",
+                },
+                {
+                  name: "PhD in Computer Science",
+                  startDate: "2024-09-15",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni6",
+          name: "National University of Singapore",
+          location: "Singapore",
+          region: "Asia",
+          students: 38600,
+          image:
+            "https://storage.googleapis.com/a1aa/image/48f50005-adbd-4452-cb2e-1b458b115c5d.jpg",
+          coursesCount: 100,
+          deadline: "2024-08-25",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Engineering in Civil Engineering",
+                  startDate: "2024-09-05",
+                },
+                {
+                  name: "Bachelor of Arts in Sociology",
+                  startDate: "2024-09-05",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Science in Data Science",
+                  startDate: "2024-09-20",
+                },
+                {
+                  name: "PhD in Biomedical Sciences",
+                  startDate: "2024-09-20",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni7",
+          name: "University of California, Berkeley",
+          location: "Berkeley, USA",
+          region: "North America",
+          students: 42500,
+          image:
+            "https://storage.googleapis.com/a1aa/image/40e2920c-04f1-42e1-35c2-80c35ed62b45.jpg",
+          coursesCount: 125,
+          deadline: "2024-08-30",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Arts in Political Science",
+                  startDate: "2024-09-01",
+                },
+                {
+                  name: "Bachelor of Science in Chemistry",
+                  startDate: "2024-09-01",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Public Policy",
+                  startDate: "2024-09-15",
+                },
+                {
+                  name: "PhD in Environmental Science",
+                  startDate: "2024-09-15",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "uni8",
+          name: "Imperial College London",
+          location: "London, UK",
+          region: "Europe",
+          students: 19400,
+          image:
+            "https://storage.googleapis.com/a1aa/image/0042feb7-8095-4e6c-2b80-a0be8c986433.jpg",
+          coursesCount: 95,
+          deadline: "2024-08-18",
+          programs: [
+            {
+              degreeLevel: "Undergraduate",
+              courses: [
+                {
+                  name: "Bachelor of Engineering in Chemical Engineering",
+                  startDate: "2024-10-01",
+                },
+                {
+                  name: "Bachelor of Science in Mathematics",
+                  startDate: "2024-10-01",
+                },
+              ],
+            },
+            {
+              degreeLevel: "Postgraduate",
+              courses: [
+                {
+                  name: "Master of Science in Data Analytics",
+                  startDate: "2024-10-15",
+                },
+                {
+                  name: "PhD in Mechanical Engineering",
+                  startDate: "2024-10-15",
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      // Render universities list with expandable details
+      function renderUniversities(list) {
+        const container = document.getElementById("universityList");
+        container.innerHTML = "";
+
+        list.forEach((uni) => {
+          // Create main university list item
+          const li = document.createElement("li");
+          li.className =
+            "university-item flex flex-col rounded-lg p-3 transition-colors";
+
+          // Header row clickable to toggle details
+          const headerDiv = document.createElement("div");
+          headerDiv.className =
+            "flex items-center justify-between cursor-pointer";
+
+          // Left side: image and info
+          const leftDiv = document.createElement("div");
+          leftDiv.className = "flex items-center space-x-3";
+
+          const img = document.createElement("img");
+          img.src = uni.image;
+          img.alt = `${uni.name} campus or building with clear sky`;
+          img.className = "w-10 h-10 rounded-full object-cover flex-shrink-0";
+          img.width = 40;
+          img.height = 40;
+          img.loading = "lazy";
+
+          const infoDiv = document.createElement("div");
+          infoDiv.className = "text-sm";
+
+          const nameDiv = document.createElement("div");
+          nameDiv.className = "font-semibold leading-tight";
+          nameDiv.textContent = uni.name;
+
+          const locationDiv = document.createElement("div");
+          locationDiv.className = "text-gray-400 text-xs leading-tight";
+          locationDiv.textContent = `${uni.location} • ${uni.region}`;
+
+          const studentsDiv = document.createElement("div");
+          studentsDiv.className = "text-gray-400 text-xs leading-tight";
+          studentsDiv.textContent = `${uni.coursesCount} courses • Deadline: ${new Date(
+            uni.deadline
+          ).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}`;
+
+          infoDiv.appendChild(nameDiv);
+          infoDiv.appendChild(locationDiv);
+          infoDiv.appendChild(studentsDiv);
+
+          leftDiv.appendChild(img);
+          leftDiv.appendChild(infoDiv);
+
+          // Right side: star and arrow icon container
+          const rightDiv = document.createElement("div");
+          rightDiv.className = "flex items-center space-x-4 text-gray-900";
+
+          const starBtn = document.createElement("button");
+          starBtn.setAttribute(
+            "aria-label",
+            `Add ${uni.name} to favorites`
+          );
+          starBtn.className = "hover:text-gray-700 focus:outline-none";
+          starBtn.innerHTML = '<i class="far fa-star text-base"></i>';
+
+          const arrowBtn = document.createElement("button");
+          arrowBtn.setAttribute(
+            "aria-label",
+            `Go to ${uni.name} details`
+          );
+          arrowBtn.className = "hover:text-gray-700 focus:outline-none";
+          arrowBtn.innerHTML = '<i class="fas fa-arrow-right text-base"></i>';
+
+          rightDiv.appendChild(starBtn);
+          rightDiv.appendChild(arrowBtn);
+
+          headerDiv.appendChild(leftDiv);
+          headerDiv.appendChild(rightDiv);
+
+          // Details div hidden by default
+          const detailsDiv = document.createElement("div");
+          detailsDiv.className =
+            "mt-3 pl-14 pr-3 pb-3 hidden border-l-4 border-indigo-600";
+
+          // Location and region repeated for clarity
+          const locRegionP = document.createElement("p");
+          locRegionP.className = "text-xs text-gray-600 mb-2";
+          locRegionP.textContent = `Location: ${uni.location} | Region: ${uni.region}`;
+
+          // Programs list
+          const programsDiv = document.createElement("div");
+          programsDiv.className = "space-y-4";
+
+          uni.programs.forEach((program) => {
+            const programDiv = document.createElement("div");
+
+            const degreeLevelH4 = document.createElement("h4");
+            degreeLevelH4.className = "font-semibold text-sm mb-1";
+            degreeLevelH4.textContent = program.degreeLevel;
+
+            const courseUl = document.createElement("ul");
+            courseUl.className = "course-list text-xs text-gray-700";
+
+            program.courses.forEach((course) => {
+              const courseLi = document.createElement("li");
+              courseLi.innerHTML = `<span class="font-medium">${course.name}</span> - Start Date: <time datetime="${course.startDate}">${new Date(
+                course.startDate
+              ).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}</time>`;
+              courseUl.appendChild(courseLi);
+            });
+
+            programDiv.appendChild(degreeLevelH4);
+            programDiv.appendChild(courseUl);
+            programsDiv.appendChild(programDiv);
+          });
+
+          detailsDiv.appendChild(locRegionP);
+          detailsDiv.appendChild(programsDiv);
+
+          li.appendChild(headerDiv);
+          li.appendChild(detailsDiv);
+
+          // Toggle details on clicking headerDiv or university name/info area
+          headerDiv.addEventListener("click", () => {
+            const isVisible = !detailsDiv.classList.contains("hidden");
+            if (isVisible) {
+              // Hide details
+              detailsDiv.classList.add("hidden");
+              li.classList.remove("active");
+              arrowBtn.innerHTML = '<i class="fas fa-arrow-right text-base"></i>';
+            } else {
+              // Show details
+              detailsDiv.classList.remove("hidden");
+              li.classList.add("active");
+              arrowBtn.innerHTML = ""; // Remove arrow icon when expanded
+            }
+          });
+
+          container.appendChild(li);
+        });
+      }
+
+      // Initial render
+      renderUniversities(universities);
+
+      // Search filter functionality
+      document.getElementById("search").addEventListener("input", (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filtered = universities.filter((uni) => {
+          return (
+            uni.name.toLowerCase().includes(searchTerm) ||
+            uni.location.toLowerCase().includes(searchTerm) ||
+            uni.region.toLowerCase().includes(searchTerm)
+          );
+        });
+        renderUniversities(filtered);
+      });
+    </script>
+
+    <script>
+      // Toggle NAV active highlight on click (both desktop and mobile)
+      function setActiveMenu(link, allLinks) {
+        allLinks.forEach((el) => {
+          el.classList.remove("active-menu");
+          el.classList.remove("active-bg");
+        });
+        link.classList.add("active-menu");
+        link.classList.add("active-bg");
+      }
+
+      // Scroll spy to highlight active section
+      function handleScroll() {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-menu-link");
+
+        let currentSection = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (
+            window.scrollY >= sectionTop - 100 &&
+            window.scrollY < sectionTop + sectionHeight - 100
+          ) {
+            currentSection = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active-menu");
+          link.classList.remove("active-bg");
+        });
+
+        if (currentSection) {
+          navLinks.forEach((link) => {
+            if (link.getAttribute("href") === `#${currentSection}`) {
+              link.classList.add("active-menu");
+              link.classList.add("active-bg");
+            }
+          });
+        } else {
+          // If no section matched, highlight Universities menu by default
+          const universitiesLink = document.getElementById("universities-link");
+          const universitiesLinkMobile = document.getElementById(
+            "universities-link-m"
+          );
+          if (universitiesLink) {
+            universitiesLink.classList.add("active-menu", "active-bg");
+          }
+          if (universitiesLinkMobile) {
+            universitiesLinkMobile.classList.add("active-menu", "active-bg");
+          }
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Desktop nav
+        const menuLinks = document.querySelectorAll(".nav-menu-link");
+        menuLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            setActiveMenu(this, menuLinks);
+          });
+        });
+
+        // Mobile menu controls
+        const mobileMenu = document.getElementById("mobileMenu");
+        const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+        const mobileMenuButton = document.getElementById("mobileMenuButton");
+        const closeMobileMenu = document.getElementById("closeMobileMenu");
+
+        function openMobileMenu() {
+          mobileMenuOverlay.classList.remove("hidden");
+          mobileMenu.classList.remove("translate-x-full");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+          mobileMenuOverlay.classList.add("hidden");
+          mobileMenu.classList.add("translate-x-full");
+          document.body.style.overflow = "";
+        }
+
+        mobileMenuButton.addEventListener("click", openMobileMenu);
+        closeMobileMenu.addEventListener("click", closeMenu);
+        mobileMenuOverlay.addEventListener("click", closeMenu);
+
+        // Mobile nav active - sync with desktop nav
+        [
+          { id: "dashboard-link-m", href: "AgentDashboard.html" },
+          { id: "students-link-m", href: "#students" },
+          { id: "universities-link-m", href: "#universities" },
+          { id: "applications-link-m", href: "#applications" },
+        ].forEach((item) => {
+          const link = document.getElementById(item.id);
+          if (link) {
+            // Set initial active state based on current page
+            if (window.location.hash === item.href) {
+              link.classList.add("active-menu", "active-bg");
+            }
+            // Add click handler
+            link.addEventListener("click", function () {
+              const mobileLinks = Array.from(
+                link.parentNode.querySelectorAll(".nav-menu-link")
+              );
+              setActiveMenu(link, mobileLinks);
+              // Also update desktop nav if it exists
+              const desktopLink = document.getElementById(item.id.replace("-m", ""));
+              if (desktopLink) {
+                const desktopLinks = Array.from(
+                  desktopLink.parentNode.parentNode.querySelectorAll(".nav-menu-link")
+                );
+                setActiveMenu(desktopLink, desktopLinks);
+              }
+              closeMenu();
+            });
+          }
+        });
+
+        // Add scroll event listener
+        window.addEventListener("scroll", handleScroll);
+
+        // Initialize on load
+        handleScroll();
+      });
+    </script>
+    <script>
+      // Profile Menu Toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const profileButton = document.getElementById("profileButton");
+        const profileMenu = document.getElementById("profileMenu");
+
+        // Toggle menu on profile button click
+        profileButton.addEventListener("click", function (e) {
+          e.stopPropagation();
+          profileMenu.classList.toggle("hidden");
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (!profileButton.contains(e.target)) {
+            profileMenu.classList.add("hidden");
+          }
+        });
+
+        // Logout handler
+        window.handleLogout = function () {
+          // Add any cleanup logic here (e.g., clearing session storage)
+          window.location.href = "../Login.html"; // Redirect to login page
+        };
+      });
+    </script>
+  </body>
+</html>
